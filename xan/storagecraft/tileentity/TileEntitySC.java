@@ -231,7 +231,7 @@ public class TileEntitySC extends TileEntity implements IInventory{
 			if (stack != null){
 				NBTTagCompound item = new NBTTagCompound();
 				
-				item.setByte("Slot", (byte)i);
+				item.setInteger("Slot", i);
 				stack.writeToNBT(item);
 				items.appendTag(item);
 			}
@@ -246,7 +246,7 @@ public class TileEntitySC extends TileEntity implements IInventory{
 		
 		for (int i = 0; i < items.tagCount(); i++){
 			NBTTagCompound item = (NBTTagCompound)items.tagAt(i);
-			int slot = item.getByte("Slot");
+			int slot = item.getInteger("Slot");
 			
 			if(slot >= 0 && slot < getSizeInventory()){
 				setInventorySlotContents(slot, ItemStack.loadItemStackFromNBT(item));

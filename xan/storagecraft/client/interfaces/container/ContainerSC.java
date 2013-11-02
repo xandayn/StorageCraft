@@ -3,6 +3,7 @@ package xan.storagecraft.client.interfaces.container;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,8 @@ import xan.storagecraft.tileentity.TileEntityGoldChest;
 import xan.storagecraft.tileentity.TileEntityIronChest;
 import xan.storagecraft.tileentity.TileEntityQuartzChest;
 import xan.storagecraft.tileentity.TileEntitySC;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ContainerSC extends Container{
 
@@ -76,20 +79,24 @@ public class ContainerSC extends Container{
 				}
 			}
 		}else if(chest instanceof TileEntityQuartzChest){
-			invRows = 9;
-			invColumns = 6;
+			invRows = 12;
+			invColumns = 9;
 			for (int x = 0; x < 9; x++){
-				addSlotToContainer(new Slot(invPlayer, x, 8 + 18 * x, 198));
+				addSlotToContainer(new Slot(invPlayer, x, 45 + 18 * x, 232));
 			}
 			
 			for (int y = 0; y < 3; y++){
 				for (int x = 0; x < 9; x++){
-					addSlotToContainer(new Slot(invPlayer, x + y * 9 + 9, 8 + 18 * x, 140 + y * 18));
+					addSlotToContainer(new Slot(invPlayer, x + y * 9 + 9, 45 + 18 * x, 174 + y * 18));
 				}
 			}
-			for (int y = 0; y < 6; y++){
-				for(int x = 0; x < 9; x++){
-					addSlotToContainer(new Slot(chest, x + (y * 9), 8 + 18 * x, 18 + y * 18));
+			for (int y = 0; y < 9; y++){
+				for(int x = 0; x < 12; x++){
+					if(chest.getStackInSlot((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab))) != null){
+						System.out.println((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab)) + " " + chest.getStackInSlot((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab))));
+					}
+					addSlotToContainer(new Slot(chest, (x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab)),  17 + 18 * x, 10 + y * 18));
+					//System.out.println((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab)));
 				}
 			}
 		}
@@ -138,6 +145,41 @@ public class ContainerSC extends Container{
 	public void onContainerClosed(EntityPlayer par1EntityPlayer) {
 		super.onContainerClosed(par1EntityPlayer);
 		chest.closeChest();
+	}
+
+	public TileEntitySC getTileEntity() {
+		return chest;
+	}
+	
+	@Override
+	public void addCraftingToCrafters(ICrafting player) {
+		super.addCraftingToCrafters(player);
+		if(chest instanceof TileEntityQuartzChest){
+			player.sendProgressBarUpdate(this, 0, ((TileEntityQuartzChest)chest).selectedTab);
+		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void updateProgressBar(int id, int data) {
+		if(chest instanceof TileEntityQuartzChest){
+			((TileEntityQuartzChest)chest).selectedTab = data;
+		}
+	}
+	
+	private int oldInt = 6;
+	
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		if(chest instanceof TileEntityQuartzChest){
+			for(Object player : crafters){
+				if(((TileEntityQuartzChest)chest).selectedTab != oldInt){
+					((ICrafting)player).sendProgressBarUpdate(this, 0, ((TileEntityQuartzChest)chest).selectedTab);
+				}
+			}
+			oldInt = ((TileEntityQuartzChest)chest).selectedTab;
+		}
 	}
 	
 }

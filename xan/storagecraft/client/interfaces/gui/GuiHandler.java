@@ -46,7 +46,7 @@ public class GuiHandler implements IGuiHandler{
 		case 3:
 			te = world.getBlockTileEntity(x, y, z);
 			if(te != null && te instanceof TileEntityQuartzChest){
-				return new ContainerSC(player.inventory, (TileEntitySC)te);
+				return new ContainerSC(player.inventory, (TileEntityQuartzChest)te);
 			}
 			break;
 		}
@@ -80,7 +80,7 @@ public class GuiHandler implements IGuiHandler{
 		case 3:
 			te = world.getBlockTileEntity(x, y, z);
 			if(te != null && te instanceof TileEntityQuartzChest){
-				return new GuiQuartzChest(player.inventory, (TileEntitySC)te);
+				return new GuiQuartzChest(player.inventory, (TileEntityQuartzChest)te);
 			}
 			break;
 		}
