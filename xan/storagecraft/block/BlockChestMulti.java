@@ -21,6 +21,7 @@ import xan.storagecraft.StorageCraft;
 import xan.storagecraft.tileentity.TileEntityDiamondChest;
 import xan.storagecraft.tileentity.TileEntityGoldChest;
 import xan.storagecraft.tileentity.TileEntityIronChest;
+import xan.storagecraft.tileentity.TileEntityQuartzChest;
 import xan.storagecraft.tileentity.TileEntitySC;
 import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
@@ -65,6 +66,8 @@ public class BlockChestMulti extends Block{
 			return new TileEntityGoldChest();
 		case 2:
 			return new TileEntityDiamondChest();
+		case 3:
+			return new TileEntityQuartzChest();
 		default:
 			return new TileEntitySC();
 		}
@@ -116,6 +119,8 @@ public class BlockChestMulti extends Block{
 				FMLNetworkHandler.openGui(player, StorageCraft.instance, 1, world, x, y, z);
 			else if(world.getBlockMetadata(x, y, z) % 4 == 2 && !world.isBlockSolidOnSide(x, y + 1, z, DOWN))
 				FMLNetworkHandler.openGui(player, StorageCraft.instance, 2, world, x, y, z);
+			else if (world.getBlockMetadata(x, y, z) % 4 == 3 && !world.isBlockSolidOnSide(x, y + 1, z, DOWN))
+				FMLNetworkHandler.openGui(player, StorageCraft.instance, 3, world, x, y, z);
 		}
 		
 		return true;

@@ -8,6 +8,7 @@ import xan.storagecraft.client.interfaces.container.ContainerSC;
 import xan.storagecraft.tileentity.TileEntityDiamondChest;
 import xan.storagecraft.tileentity.TileEntityGoldChest;
 import xan.storagecraft.tileentity.TileEntityIronChest;
+import xan.storagecraft.tileentity.TileEntityQuartzChest;
 import xan.storagecraft.tileentity.TileEntitySC;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -42,6 +43,12 @@ public class GuiHandler implements IGuiHandler{
 				return new ContainerSC(player.inventory, (TileEntitySC)te);
 			}
 			break;
+		case 3:
+			te = world.getBlockTileEntity(x, y, z);
+			if(te != null && te instanceof TileEntityQuartzChest){
+				return new ContainerSC(player.inventory, (TileEntitySC)te);
+			}
+			break;
 		}
 		
 		return null;
@@ -66,8 +73,14 @@ public class GuiHandler implements IGuiHandler{
 			break;
 		case 2:
 			te = world.getBlockTileEntity(x, y, z);
-			if(te != null && te instanceof TileEntityGoldChest){
+			if(te != null && te instanceof TileEntitySC){
 				return new GuiDiamondChest(player.inventory, (TileEntitySC)te);
+			}
+			break;
+		case 3:
+			te = world.getBlockTileEntity(x, y, z);
+			if(te != null && te instanceof TileEntityQuartzChest){
+				return new GuiQuartzChest(player.inventory, (TileEntitySC)te);
 			}
 			break;
 		}

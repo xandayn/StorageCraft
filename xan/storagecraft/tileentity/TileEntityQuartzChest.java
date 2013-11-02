@@ -2,15 +2,15 @@ package xan.storagecraft.tileentity;
 
 import net.minecraft.item.ItemStack;
 
-public class TileEntityIronChest extends TileEntitySC {
+public class TileEntityQuartzChest extends TileEntitySC {
 
-	public TileEntityIronChest(){
+	public TileEntityQuartzChest(){
 		items = new ItemStack[54];
 	}
 	
 	@Override
 	public String getInvName() {
-		return "InventoryIronChest";
+		return "InventoryQuartzChest";
 	}
 	
 }

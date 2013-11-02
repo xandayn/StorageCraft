@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import xan.storagecraft.tileentity.TileEntityDiamondChest;
 import xan.storagecraft.tileentity.TileEntityGoldChest;
 import xan.storagecraft.tileentity.TileEntityIronChest;
+import xan.storagecraft.tileentity.TileEntityQuartzChest;
 import xan.storagecraft.tileentity.TileEntitySC;
 
 public class ContainerSC extends Container{
@@ -19,7 +20,6 @@ public class ContainerSC extends Container{
 	public ContainerSC(InventoryPlayer invPlayer, TileEntitySC chest){
 		this.chest = chest;
 		this.invPlayer = invPlayer;
-		//chest.openChest();
 		if(chest instanceof TileEntityIronChest){
 			for (int x = 0; x < 9; x++){
 				addSlotToContainer(new Slot(invPlayer, x, 8 + 18 * x, 198));
@@ -53,9 +53,33 @@ public class ContainerSC extends Container{
 			}
 		}
 		else if(chest instanceof TileEntityDiamondChest){
+			for (int x = 0; x < 9; x++){
+				addSlotToContainer(new Slot(invPlayer, x, 45 + 18 * x, 232));
+			}
+			
+			for (int y = 0; y < 3; y++){
+				for (int x = 0; x < 9; x++){
+					addSlotToContainer(new Slot(invPlayer, x + y * 9 + 9, 45 + 18 * x, 174 + y * 18));
+				}
+			}
 			for (int y = 0; y < 9; y++){
 				for(int x = 0; x < 12; x++){
-					addSlotToContainer(new Slot(chest, x + (y * 12), 8 + 18 * x, 18 + y * 18));
+					addSlotToContainer(new Slot(chest, x + (y * 12),  17 + 18 * x, 10 + y * 18));
+				}
+			}
+		}else if(chest instanceof TileEntityQuartzChest){
+			for (int x = 0; x < 9; x++){
+				addSlotToContainer(new Slot(invPlayer, x, 8 + 18 * x, 198));
+			}
+			
+			for (int y = 0; y < 3; y++){
+				for (int x = 0; x < 9; x++){
+					addSlotToContainer(new Slot(invPlayer, x + y * 9 + 9, 8 + 18 * x, 140 + y * 18));
+				}
+			}
+			for (int y = 0; y < 6; y++){
+				for(int x = 0; x < 9; x++){
+					addSlotToContainer(new Slot(chest, x + (y * 9), 8 + 18 * x, 18 + y * 18));
 				}
 			}
 		}

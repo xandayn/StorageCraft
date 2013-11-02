@@ -14,15 +14,15 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiDiamondChest extends GuiContainer{
-	
-	public GuiDiamondChest(InventoryPlayer invPlayer, TileEntitySC chest) {
+public class GuiQuartzChest extends GuiContainer{
+
+	public GuiQuartzChest(InventoryPlayer invPlayer, TileEntitySC chest) {
 		super(new ContainerSC(invPlayer, chest));
-		xSize = 247;
-		ySize = 255;
+		xSize = 176;
+		ySize = 221;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/gui/DiamondChestGUI.png");
+	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/gui/IronChestGUI.png");
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
@@ -31,4 +31,5 @@ public class GuiDiamondChest extends GuiContainer{
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
+
 }

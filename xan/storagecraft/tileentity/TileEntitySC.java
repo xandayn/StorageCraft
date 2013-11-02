@@ -73,7 +73,7 @@ public class TileEntitySC extends TileEntity implements IInventory{
 
 	@Override
 	public String getInvName() {
-		return "InventoryIronChest";
+		return "InventorySC";
 	}
 
 	@Override

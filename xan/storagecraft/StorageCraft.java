@@ -10,6 +10,7 @@ import xan.storagecraft.proxy.CommonProxy;
 import xan.storagecraft.tileentity.TileEntityDiamondChest;
 import xan.storagecraft.tileentity.TileEntityGoldChest;
 import xan.storagecraft.tileentity.TileEntityIronChest;
+import xan.storagecraft.tileentity.TileEntityQuartzChest;
 import xan.storagecraft.tileentity.TileEntitySC;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -40,7 +41,7 @@ public class StorageCraft {
 	}
 	
 	@EventHandler
-	public void Init(FMLInitializationEvent event){		
+	public void Init(FMLInitializationEvent event){	
 		proxy.initRenderers();
 		
 		chestBlock = new BlockChestMulti(500).setUnlocalizedName("test");
@@ -51,6 +52,7 @@ public class StorageCraft {
 		GameRegistry.registerTileEntity(TileEntityIronChest.class, "TEIC");
 		GameRegistry.registerTileEntity(TileEntityGoldChest.class, "TEGC");
 		GameRegistry.registerTileEntity(TileEntityDiamondChest.class, "TEDC");
+		GameRegistry.registerTileEntity(TileEntityQuartzChest.class, "TEQC");
 
 		
 		LanguageRegistry.addName(new ItemStack(chestBlock, 1, 0), "Iron Chest");

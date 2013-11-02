@@ -8,4 +8,9 @@ public class TileEntityGoldChest extends TileEntitySC {
 		items = new ItemStack[72];
 	}
 	
+	@Override
+	public String getInvName() {
+		return "InventoryGoldChest";
+	}
+	
 }
