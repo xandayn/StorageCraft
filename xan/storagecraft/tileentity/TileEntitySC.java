@@ -12,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import xan.storagecraft.block.BlockChestMulti;
 import xan.storagecraft.client.interfaces.container.ContainerSC;
+import xan.storagecraft.network.PacketHandler;
 
 public class TileEntitySC extends TileEntity implements IInventory{
 
@@ -22,6 +23,8 @@ public class TileEntitySC extends TileEntity implements IInventory{
     private int ticksSinceSync;
     private int cachedChestType;
 	
+    private boolean canPlaySound = false;
+    
     public ItemStack[] items;
     
 	@Override
@@ -142,13 +145,17 @@ public class TileEntitySC extends TileEntity implements IInventory{
         ++this.ticksSinceSync;
         float f;
         
+        if(lidAngle == 0){
+        	canPlaySound = true;
+        }
+        
         if (!this.worldObj.isRemote && this.numUsingPlayers != 0 && (this.ticksSinceSync + this.xCoord + this.yCoord + this.zCoord) % 200 == 0)
         {
             this.numUsingPlayers = 0;
             f = 5.0F;
             List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, AxisAlignedBB.getAABBPool().getAABB((double)((float)this.xCoord - f), (double)((float)this.yCoord - f), (double)((float)this.zCoord - f), (double)((float)(this.xCoord + 1) + f), (double)((float)(this.yCoord + 1) + f), (double)((float)(this.zCoord + 1) + f)));
             Iterator iterator = list.iterator();
-
+            
             while (iterator.hasNext())
             {
                 EntityPlayer entityplayer = (EntityPlayer)iterator.next();
@@ -193,8 +200,9 @@ public class TileEntitySC extends TileEntity implements IInventory{
 
             float f2 = 0.5F;
 
-            if (this.lidAngle < f2)
+            if (this.lidAngle < f2 && numUsingPlayers == 0 && canPlaySound)
             {
+            	canPlaySound = false;
                 this.worldObj.playSoundEffect((double)this.xCoord + 0.05D, (double)this.yCoord + 0.5D, (double)this.zCoord, "random.chestclosed", 0.5F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
             }
 
@@ -202,8 +210,14 @@ public class TileEntitySC extends TileEntity implements IInventory{
             {
                 this.lidAngle = 0.0F;
             }
+            sendPacketInformation();
         }
     }
+	
+	private void sendPacketInformation(){
+		if(this.lidAngle != 0.0f || this.lidAngle != 1.0f)
+		PacketHandler.sendLidAngle(this);
+	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound compound) {

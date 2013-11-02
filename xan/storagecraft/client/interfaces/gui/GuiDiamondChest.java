@@ -31,4 +31,10 @@ public class GuiDiamondChest extends GuiContainer{
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
+	
+	@Override
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+		fontRenderer.drawString("Diamond Chest", 8, 2, 0x404040);
+		fontRenderer.drawString("Inv.", 20, 174, 0x404040);
+	}
 }

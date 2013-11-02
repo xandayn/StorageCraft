@@ -31,4 +31,10 @@ public class GuiGoldChest extends GuiContainer{
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
+	
+	@Override
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+		fontRenderer.drawString("Gold Chest", 8, 6, 0x404040);
+		fontRenderer.drawString("Inventory", 34, 129, 0x404040);
+	}
 }

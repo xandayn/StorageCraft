@@ -3,15 +3,13 @@ package xan.storagecraft;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import xan.storagecraft.block.BlockChestMulti;
-import xan.storagecraft.block.SCChestItemBlock;
+import xan.storagecraft.block.ChestMultiItemBlock;
 import xan.storagecraft.client.interfaces.gui.GuiHandler;
+import xan.storagecraft.config.ConfigHandler;
+import xan.storagecraft.lib.BlockIDs;
 import xan.storagecraft.lib.Reference;
+import xan.storagecraft.network.PacketHandler;
 import xan.storagecraft.proxy.CommonProxy;
-import xan.storagecraft.tileentity.TileEntityDiamondChest;
-import xan.storagecraft.tileentity.TileEntityGoldChest;
-import xan.storagecraft.tileentity.TileEntityIronChest;
-import xan.storagecraft.tileentity.TileEntityQuartzChest;
-import xan.storagecraft.tileentity.TileEntitySC;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -24,7 +22,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid=Reference.MOD_ID, name=Reference.MOD_NAME, version=Reference.VERSION)
-@NetworkMod(clientSideRequired=true, serverSideRequired=false)
+@NetworkMod(channels = {Reference.CHANNEL}, clientSideRequired=true, serverSideRequired=false, packetHandler = PacketHandler.class)
 public class StorageCraft {
 
 	public static Block chestBlock;
@@ -37,23 +35,16 @@ public class StorageCraft {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
-		
+		ConfigHandler.init(event.getSuggestedConfigurationFile());
+		proxy.initRenderers();
+		proxy.registerTileEntities();
 	}
 	
 	@EventHandler
 	public void Init(FMLInitializationEvent event){	
-		proxy.initRenderers();
+		chestBlock = new BlockChestMulti(BlockIDs.CHEST_MULTI_ID).setUnlocalizedName("test");
 		
-		chestBlock = new BlockChestMulti(500).setUnlocalizedName("test");
-		
-		GameRegistry.registerBlock(chestBlock, SCChestItemBlock.class, Reference.MOD_ID+chestBlock.getUnlocalizedName().substring(5));
-		
-		GameRegistry.registerTileEntity(TileEntitySC.class, "TESC");
-		GameRegistry.registerTileEntity(TileEntityIronChest.class, "TEIC");
-		GameRegistry.registerTileEntity(TileEntityGoldChest.class, "TEGC");
-		GameRegistry.registerTileEntity(TileEntityDiamondChest.class, "TEDC");
-		GameRegistry.registerTileEntity(TileEntityQuartzChest.class, "TEQC");
-
+		GameRegistry.registerBlock(chestBlock, ChestMultiItemBlock.class, Reference.MOD_ID+chestBlock.getUnlocalizedName().substring(5));
 		
 		LanguageRegistry.addName(new ItemStack(chestBlock, 1, 0), "Iron Chest");
 		LanguageRegistry.addName(new ItemStack(chestBlock, 1, 1), "Gold Chest");

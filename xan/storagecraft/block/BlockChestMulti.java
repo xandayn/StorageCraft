@@ -18,6 +18,7 @@ import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import xan.storagecraft.StorageCraft;
+import xan.storagecraft.lib.RenderIDs;
 import xan.storagecraft.tileentity.TileEntityDiamondChest;
 import xan.storagecraft.tileentity.TileEntityGoldChest;
 import xan.storagecraft.tileentity.TileEntityIronChest;
@@ -34,6 +35,7 @@ public class BlockChestMulti extends Block{
 		super(par1, Material.iron);
 		this.setCreativeTab(CreativeTabs.tabDecorations);
 		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
+		this.setHardness(5f);
 	}
 	
 	@Override
@@ -49,7 +51,7 @@ public class BlockChestMulti extends Block{
 	@Override
 	public int getRenderType()
 	{
-		return -1;
+		return RenderIDs.CHEST_ID;
 	}
 	
 	@Override
@@ -101,7 +103,7 @@ public class BlockChestMulti extends Block{
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs tab, List list){
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 3; i++){
 			list.add(new ItemStack(par1, 1, i));
 		}
 	}

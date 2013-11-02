@@ -31,5 +31,10 @@ public class GuiQuartzChest extends GuiContainer{
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
+	
+	@Override
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+		fontRenderer.drawString("How'd you get this?", 8, 6, 0x404040);
+	}
 
 }

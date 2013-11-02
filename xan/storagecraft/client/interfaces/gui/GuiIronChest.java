@@ -31,5 +31,11 @@ public class GuiIronChest extends GuiContainer{
 		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
+	
+	@Override
+	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+		fontRenderer.drawString("Iron Chest", 8, 6, 0x404040);
+		fontRenderer.drawString("Inventory", 8, 129, 0x404040);
+	}
 
 }

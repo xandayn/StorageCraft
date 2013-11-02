@@ -1,0 +1,20 @@
+[
+{
+  "modid": "xan_storagecraft",
+  "name": "StorageCraft",
+  "description": "A mod for storing items and liquids more efficiently",
+  "version": "1.0",
+  "url": "https://github.com/xandayn/StorageCraft",
+  "updateUrl": "",
+  "authorList": [
+    "xandayn"
+  ],
+  "credits": "xandayn",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]

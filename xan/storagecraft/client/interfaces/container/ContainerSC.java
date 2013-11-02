@@ -16,11 +16,15 @@ public class ContainerSC extends Container{
 
 	private TileEntitySC chest;
 	private InventoryPlayer invPlayer;
+	private int invRows;
+	private int invColumns;
 	
 	public ContainerSC(InventoryPlayer invPlayer, TileEntitySC chest){
 		this.chest = chest;
 		this.invPlayer = invPlayer;
 		if(chest instanceof TileEntityIronChest){
+			invRows = 9;
+			invColumns = 6;
 			for (int x = 0; x < 9; x++){
 				addSlotToContainer(new Slot(invPlayer, x, 8 + 18 * x, 198));
 			}
@@ -37,6 +41,8 @@ public class ContainerSC extends Container{
 			}
 		}
 		else if(chest instanceof TileEntityGoldChest){
+			invRows = 12;
+			invColumns = 6;
 			for (int x = 0; x < 9; x++){
 				addSlotToContainer(new Slot(invPlayer, x, 35 + 18 * x, 198));
 			}
@@ -53,6 +59,8 @@ public class ContainerSC extends Container{
 			}
 		}
 		else if(chest instanceof TileEntityDiamondChest){
+			invRows = 12;
+			invColumns = 9;
 			for (int x = 0; x < 9; x++){
 				addSlotToContainer(new Slot(invPlayer, x, 45 + 18 * x, 232));
 			}
@@ -68,6 +76,8 @@ public class ContainerSC extends Container{
 				}
 			}
 		}else if(chest instanceof TileEntityQuartzChest){
+			invRows = 9;
+			invColumns = 6;
 			for (int x = 0; x < 9; x++){
 				addSlotToContainer(new Slot(invPlayer, x, 8 + 18 * x, 198));
 			}
@@ -93,7 +103,31 @@ public class ContainerSC extends Container{
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
-		return null;
+        Slot slot = getSlot(par2);
+
+        if (slot != null && slot.getHasStack()) {
+            ItemStack itemStack = slot.getStack();
+            ItemStack newItemStack = itemStack.copy();
+
+            if (par2 >= 36) {
+                if (!mergeItemStack(itemStack, 0, 36, false))
+                    return null;
+            }
+            else if (!this.mergeItemStack(itemStack, 36, 36 + chest.getSizeInventory(), false)){
+                return null;
+            }
+            
+            if(itemStack.stackSize == 0){
+            	slot.putStack(null);
+            }else {
+            	slot.onSlotChanged();
+            }
+
+            slot.onPickupFromSlot(par1EntityPlayer, itemStack);
+            return newItemStack;
+        }
+        
+        return null;
 	}
 	
 	public IInventory getInv(){
