@@ -1,6 +1,7 @@
 package xan.storagecraft;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import xan.storagecraft.block.BlockChestMulti;
 import xan.storagecraft.block.ChestMultiItemBlock;
@@ -45,6 +46,10 @@ public class StorageCraft {
 		chestBlock = new BlockChestMulti(BlockIDs.CHEST_MULTI_ID).setUnlocalizedName("test");
 		
 		GameRegistry.registerBlock(chestBlock, ChestMultiItemBlock.class, Reference.MOD_ID+chestBlock.getUnlocalizedName().substring(5));
+		
+		GameRegistry.addRecipe(new ItemStack(chestBlock, 1, 0), "XXX", "X X", "XXX", 'X', Item.ingotIron);
+		GameRegistry.addRecipe(new ItemStack(chestBlock, 1, 1), "XXX", "X X", "XXX", 'X', Item.ingotGold);
+		GameRegistry.addRecipe(new ItemStack(chestBlock, 1, 2), "XXX", "X X", "XXX", 'X', Item.diamond);
 		
 		LanguageRegistry.addName(new ItemStack(chestBlock, 1, 0), "Iron Chest");
 		LanguageRegistry.addName(new ItemStack(chestBlock, 1, 1), "Gold Chest");
