@@ -1,5 +1,6 @@
 package xan.storagecraft;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -48,11 +49,13 @@ public class StorageCraft {
 		GameRegistry.addRecipe(new ItemStack(Content.chestBlock, 1, 0), "XXX", "X X", "XXX", 'X', Item.ingotIron);
 		GameRegistry.addRecipe(new ItemStack(Content.chestBlock, 1, 1), "XXX", "X X", "XXX", 'X', Item.ingotGold);
 		GameRegistry.addRecipe(new ItemStack(Content.chestBlock, 1, 2), "XXX", "X X", "XXX", 'X', Item.diamond);
+		GameRegistry.addRecipe(new ItemStack(Content.tankBlock, 4, 0), "XYX", "Y Y", "XYX", 'X', Item.ingotIron, 'Y', Block.glass);
 		
 		LanguageRegistry.addName(new ItemStack(Content.chestBlock, 1, 0), "Iron Chest");
 		LanguageRegistry.addName(new ItemStack(Content.chestBlock, 1, 1), "Gold Chest");
 		LanguageRegistry.addName(new ItemStack(Content.chestBlock, 1, 2), "Diamond Chest");
 		LanguageRegistry.addName(new ItemStack(Content.chestBlock, 1, 3), "Quartz Chest");
+		LanguageRegistry.addName(Content.tankBlock, "Fluid Tank");
 		
 		new GuiHandler();
 	}

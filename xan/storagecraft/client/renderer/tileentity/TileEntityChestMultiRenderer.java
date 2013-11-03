@@ -62,7 +62,6 @@ public class TileEntityChestMultiRenderer extends TileEntitySpecialRenderer{
             GL11.glScalef(1.0F, -1.0F, -1.0F);
             GL11.glTranslatef(0.5F, 0.5F, 0.5F);
             
-            //System.out.println(te.chestRotation);`
             GL11.glRotatef(rotation, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(0F, -1F, 0F);
             float f1 = te.prevLidAngle + (te.lidAngle - te.prevLidAngle) * f;

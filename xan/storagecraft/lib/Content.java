@@ -1,9 +1,10 @@
 package xan.storagecraft.lib;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.BlockFluidFinite;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -28,9 +29,8 @@ public class Content {
 
 		if(!FluidRegistry.registerFluid(Content.fluidMilk))
 			fluidMilk = FluidRegistry.getFluid("milk");
-		milkBlock = new BlockLiquidMilk(BlockIDs.LIQUID_TANK_ID + 1, fluidMilk);
-		System.out.println(fluidMilk.getBlockID());
-		
+		milkBlock = new BlockLiquidMilk(BlockIDs.LIQUID_MILK_ID, fluidMilk);
+		GameRegistry.registerBlock(milkBlock, "milk_fluid");
 		FluidContainerRegistry.registerFluidContainer(new FluidStack(fluidMilk, 1000), new ItemStack(Item.bucketMilk), new ItemStack(Item.bucketEmpty));
 		
 		

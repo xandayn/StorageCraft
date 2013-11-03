@@ -18,7 +18,6 @@ public class TileEntityQuartzChest extends TileEntitySC {
 	
 	public void recieveTabPacketEvent(int tab){
 		selectedTab = tab;
-		System.out.println("Tab set to " + tab);
 	}
 	
 	@Override

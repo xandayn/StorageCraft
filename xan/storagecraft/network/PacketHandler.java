@@ -8,8 +8,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.tileentity.TileEntity;
 import xan.storagecraft.client.interfaces.container.ContainerSC;
 import xan.storagecraft.lib.Reference;
+import xan.storagecraft.tileentity.TileEntityLiquidStorageTank;
 import xan.storagecraft.tileentity.TileEntityQuartzChest;
 import xan.storagecraft.tileentity.TileEntitySC;
 
@@ -69,7 +71,7 @@ public class PacketHandler implements IPacketHandler{
 		}
 	}
 
-	public static void sendButton(byte i) {
+	public static void sendTabInfo(byte i) {
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream dataStream = new DataOutputStream(byteStream);
 		

@@ -86,7 +86,7 @@ public class GuiQuartzChest extends GuiContainer{
 			GuiRectangle rect = rectangles[i];
 			
 			if(rect.inRect(this, x, y)){
-				PacketHandler.sendButton((byte)i);
+				PacketHandler.sendTabInfo((byte)i);
 				break;
 			}
 		}

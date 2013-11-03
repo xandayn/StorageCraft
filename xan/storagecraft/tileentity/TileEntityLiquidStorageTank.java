@@ -1,6 +1,11 @@
 package xan.storagecraft.tileentity;
 
+import xan.storagecraft.network.PacketHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeDirection;
@@ -14,6 +19,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 public class TileEntityLiquidStorageTank extends TileEntity implements IFluidHandler{
 
 	public FluidTank tank;
+	public int renderoffset;
 	
 	public TileEntityLiquidStorageTank() {
 		tank = new FluidTank(FluidContainerRegistry.BUCKET_VOLUME * 8);
@@ -22,11 +28,11 @@ public class TileEntityLiquidStorageTank extends TileEntity implements IFluidHan
 	@Override
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 		int amount = tank.fill(resource, doFill);
-		//System.out.println(amount);
 		if(amount > 0 && doFill){
-			//Update rendering code here when implemented
+			renderoffset = resource.amount;
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
-		
+
 		return amount;
 	}
 
@@ -37,11 +43,10 @@ public class TileEntityLiquidStorageTank extends TileEntity implements IFluidHan
 
 	@Override
 	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		
 		FluidStack amount = tank.drain(maxDrain, doDrain);
-		
 		if(amount != null && doDrain){
-			//Update rendering code here when implemented
+			renderoffset = -maxDrain;
+			worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 		}
 		
 		return amount;
@@ -70,31 +75,50 @@ public class TileEntityLiquidStorageTank extends TileEntity implements IFluidHan
 	@Override
 	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
 		super.writeToNBT(par1nbtTagCompound);
-		
-		FluidStack fluid = tank.getFluid();
-		par1nbtTagCompound.setBoolean("tankHasFluid", fluid != null);
-		if(fluid != null){
-			par1nbtTagCompound.setInteger("liquidID", fluid.fluidID);
-			par1nbtTagCompound.setInteger("amount", fluid.amount);
-		}
-		
+		writeCustomNBT(par1nbtTagCompound);
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound par1nbtTagCompound) {
 		super.readFromNBT(par1nbtTagCompound);
-		
-		if(par1nbtTagCompound.getBoolean("tankHasFluid")){
-			tank.setFluid(new FluidStack(par1nbtTagCompound.getInteger("liquidID"), par1nbtTagCompound.getInteger("amount")));
-		}
-		else
-		{
-			tank.setFluid(null);
-		}
+		readCustomNBT(par1nbtTagCompound);
 	}
 	
-	public void getTextureFromId(int id){
-		
-	}
+    public void readCustomNBT (NBTTagCompound tags)
+    {
+        if (tags.getBoolean("hasFluid"))
+            tank.setFluid(new FluidStack(tags.getInteger("itemID"), tags.getInteger("amount")));
+        else
+            tank.setFluid(null);
+    }
 
+    public void writeCustomNBT (NBTTagCompound tags)
+    {
+        FluidStack liquid = tank.getFluid();
+        tags.setBoolean("hasFluid", liquid != null);
+        if (liquid != null)
+        {
+            tags.setInteger("itemID", liquid.fluidID);
+            tags.setInteger("amount", liquid.amount);
+        }
+    }
+	
+	@Override
+	public void updateEntity() {
+		super.updateEntity();
+	}
+	
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound tag = new NBTTagCompound();
+		writeCustomNBT(tag);
+		return new Packet132TileEntityData(xCoord, yCoord, zCoord, 0, tag);
+	}
+	
+	@Override
+	public void onDataPacket(INetworkManager net, Packet132TileEntityData pkt) {
+		
+		readCustomNBT(pkt.data);
+		worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+	}
 }

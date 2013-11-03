@@ -94,9 +94,6 @@ public class ContainerSC extends Container{
 			}
 			for (int y = 0; y < 9; y++){
 				for(int x = 0; x < 12; x++){
-					if(chest.getStackInSlot((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab))) != null){
-						System.out.println((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab)) + " " + chest.getStackInSlot((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab))));
-					}
 					addSlotToContainer(new Slot(chest, (x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab)),  17 + 18 * x, 10 + y * 18));
 				}
 			}
