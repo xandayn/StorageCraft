@@ -7,11 +7,13 @@ import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import xan.storagecraft.StorageCraft;
 import xan.storagecraft.tileentity.TileEntityDiamondChest;
 import xan.storagecraft.tileentity.TileEntityGoldChest;
 import xan.storagecraft.tileentity.TileEntityIronChest;
 import xan.storagecraft.tileentity.TileEntityQuartzChest;
 import xan.storagecraft.tileentity.TileEntitySC;
+import cpw.mods.fml.common.network.FMLNetworkHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -96,7 +98,6 @@ public class ContainerSC extends Container{
 						System.out.println((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab)) + " " + chest.getStackInSlot((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab))));
 					}
 					addSlotToContainer(new Slot(chest, (x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab)),  17 + 18 * x, 10 + y * 18));
-					//System.out.println((x + (y * 12)) + (108 * (((TileEntityQuartzChest)chest).selectedTab)));
 				}
 			}
 		}
@@ -164,6 +165,7 @@ public class ContainerSC extends Container{
 	public void updateProgressBar(int id, int data) {
 		if(chest instanceof TileEntityQuartzChest){
 			((TileEntityQuartzChest)chest).selectedTab = data;
+			//FMLNetworkHandler.openGui(this.invPlayer.player, StorageCraft.instance, 3, chest.worldObj, chest.xCoord, chest.yCoord, chest.zCoord);
 		}
 	}
 	

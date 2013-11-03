@@ -19,7 +19,7 @@ public class GuiIronChest extends GuiContainer{
 	public GuiIronChest(InventoryPlayer invPlayer, TileEntitySC chest) {
 		super(new ContainerSC(invPlayer, chest));
 		xSize = 176;
-		ySize = 221;
+		ySize = 222;
 	}
 
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/gui/IronChestGUI.png");

@@ -25,8 +25,8 @@ public class GuiQuartzChest extends GuiContainer{
 	public GuiQuartzChest(InventoryPlayer invPlayer, TileEntityQuartzChest chest) {
 		super(new ContainerSC(invPlayer, chest));
 		this.chest = chest;
-		xSize = 247;
-		ySize = 255;
+		xSize = 248;
+		ySize = 256;
 	}
 
 	static {
